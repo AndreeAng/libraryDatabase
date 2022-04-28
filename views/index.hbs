@@ -1,0 +1,16 @@
+<div class="container">
+   <h1>Online Library</h1>
+   <h2>Enter your tasks here</h2>
+   <form method="POST" action="/" >
+      <input type="text" name="task" id="task" required>
+      <button type="submit" id="submit">Librarian</button>
+      <button type="submit" id="submit">Customer</button>
+   </form>
+   <div id="tasks_container">
+      <ul>
+         {{#each items}}
+         <li>{{task}}</li>
+         {{/each}}
+      </ul>
+   </div>
+</div>
