@@ -7,6 +7,11 @@ body {
     background-color: lightblue;
     padding: 2%
 }
+.items_view{
+    background: pink;
+    padding: 2%;
+}
+
 h1 {
     color: navy;
 }
