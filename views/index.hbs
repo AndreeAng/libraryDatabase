@@ -1,25 +1,76 @@
 <div class="container">
    <h1>Online Library</h1>
-   <h2>Customer Portal</h2>
+   <h2>Librarian Portal</h2>
+
+   <a href="customer.hbs">
+      <button type="button" id="submit">Switch to Customer View</button>
+   </a>
+   <br>
+   <br>
+   <h3>Add a Book to the Library:</h3>
    <form method="POST" action="/" >
-      <input type="text" name="task" id="task" required>
-      <button type="submit" id="submit">Librarian</button>
-      <button type="submit" id="submit">Customer</button>
+      <label for="ibsn">IBSN:</label>
+      <input type="text" name="ibsn" id="task" required>
+      <label for="title">Title:</label>
+      <input type="text" name="name" id="task" required>
+      <label for="status">Status:</label>
+      <input type="text" name="status" id="task" required>
+      <label for="author">Author:</label>
+      <input type="text" name="author" id="task" required>
+      <label for="genre">Genre:</label>
+      <input type="text" name="genre" id="task" required>
+      <button type="submit" id="submit">Add Book</button>
    </form>
+   <br>
+   <h3>Books in the Library:</h3>
    <div id="tasks_container">
       <ul>
          {{#each items}}
-         <li>{{task}}</li>
+         <li>IBSN: {{ibsn}} | Title: {{name}} | Status: {{status}} | Author: {{author}} | Genre: {{genre}} </li>
          {{/each}}
       </ul>
    </div>
 </div>
 
-<div class="items_view">
+<div class="audio_view">
+   <h3>Add an AudioBook to the Library:</h3>
     {{!-- <form method="POST" action="/">
     <ul>
         {{#each items}}
     </ul>
     </form> --}}
-    <p>help</p>
+    <form method="POST" action="/" >
+      <label for="id">ID:</label>
+      <input type="text" name="id" id="task" required>
+      <label for="name">Title:</label>
+      <input type="text" name="name" id="task" required>
+      <label for="status">Status:</label>
+      <input type="text" name="status" id="task" required>
+      <label for="length">Length:</label>
+      <input type="text" name="length" id="task" required>
+      <label for="author">Author:</label>
+      <input type="text" name="author" id="task" required>
+      <label for="narrator">Narrator:</label>
+      <input type="text" name="narrator" id="task" required>
+      <label for="genre">Genre:</label>
+      <input type="text" name="genre" id="task" required>
+      <button type="submit" id="submit">Add Audiobook</button>
+   </form>
+   <h3>Audiobooks in the Library:</h3>
+   <div id="tasks_container">
+      <ul>
+         {{#each auds}}
+         <li>ID: {{id}} | Title: {{name}} | Status: {{status}} | Length: {{length}} | Author: {{author}} | Narrator: {{narrator}} | Genre: {{genre}} </li>
+         {{/each}}
+      </ul>
+   </div>
+</div>
+
+<div class="cd_view">
+   <h3>Add a CD to the Library:</h3>
+    {{!-- <form method="POST" action="/">
+    <ul>
+        {{#each items}}
+    </ul>
+    </form> --}}
 </div>

@@ -1,14 +1,22 @@
 body {
     min-width: 60%;
-    width: 80%;
+    width: 100%;
     margin: auto;
 }
 .container {
     background-color: lightblue;
     padding: 2%
 }
-.items_view{
+.customer-container {
+    background-color: rgb(185, 45, 126);
+    padding: 2%
+}
+.audio_view{
     background: pink;
+    padding: 2%;
+}
+.cd_view{
+    background: purple;
     padding: 2%;
 }
 
@@ -17,6 +25,7 @@ h1 {
 }
 #task {
     padding: 1% 2%;
+    width: 80px;
     border-color: navy;
 }
 #submit {
