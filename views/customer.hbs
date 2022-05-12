@@ -6,7 +6,7 @@
    </a>
    <br>
    <br>
-   <form method="POST" action="/" >
+   {{!-- <form method="POST" action="/" >
       <label for="ibsn">IBSN:</label>
       <input type="text" name="ibsn" id="task" required>
       <label for="title">Title:</label>
@@ -18,7 +18,12 @@
       <label for="genre">Genre:</label>
       <input type="text" name="genre" id="task" required>
       <button type="submit" id="submit">Add Book</button>
-   </form>
+   </form> --}}
+   <h3>Books</h3>
+   <br>
+   <h3>CDs</h3>
+   <br>
+   <h3>Audiobooks</h3>
    <div id="tasks_container">
       <ul>
          {{#each items}}
@@ -26,13 +31,4 @@
          {{/each}}
       </ul>
    </div>
-</div>
-
-<div class="items_view">
-    {{!-- <form method="POST" action="/">
-    <ul>
-        {{#each items}}
-    </ul>
-    </form> --}}
-    <p>help</p>
 </div>

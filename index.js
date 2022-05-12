@@ -12,6 +12,7 @@ app.set('view engine', 'hbs');
 
 // //handlebars html templates stored in views/layouts folder
 app.engine('hbs', hbs.engine({
+    
     layoutsDir: __dirname + '/views/layouts',
     defaultLayout: 'main',
     extname: '.hbs'
@@ -28,22 +29,26 @@ app.use(bodyParser.json())
 
 
 app.get('/index.hbs', (req, res) => {
-    var queries = "SELECT * FROM library.book;SELECT * FROM library.audiobook;SELECT * FROM library.cd";
+    var queries = "SELECT * FROM library.book;SELECT * FROM library.audiobook;SELECT * FROM library.cd;SELECT * FROM library.customer";
     let items = []
     let auds = []
     let cd_s = []
-    con.query(queries, [3,1], function(err, result, fields){
+    let customers = []
+    con.query(queries, [4,1], function(err, result, fields){
         if (err) throw err;
-        items = result[0]
-        auds = result[1]
-        cd_s = result[2]
+        items     = result[0]
+        auds      = result[1]
+        cd_s      = result[2]
+        customers = result[3]
         console.log(items)
         console.log(auds)
         console.log(cd_s)
+        console.log(customers)
         res.render('index', {
             items: items,
             auds:auds,
-            cd_s:cd_s
+            cd_s:cd_s,
+            customers:customers
         })
     })
 });
@@ -91,6 +96,18 @@ app.post('/cd', (req, res) => {
     let query = "INSERT INTO library.cd(id, name, status, artist_name, year, genre) VALUES ?;";
     data = [
         [req.body.id, req.body.name, req.body.status, req.body.artist_name, req.body.year, req.body.genre]
+    ]
+    con.query(query, [data], (err, result) => {
+        if (err) throw err;
+        console.log(result)
+        res.redirect('/')
+    })
+});
+
+app.post('/customer', (req, res) => {
+    let query = "INSERT INTO library.customer(library_card_number, username, password, first_name, last_name, email, items_checked_out, address_number, address_street, address_city, address_state, address_zipcode) VALUES ?;";
+    data = [
+        [req.body.library_card_number, req.body.username, req.body.password, req.body.first_name, req.body.last_name, req.body.email, req.body.items_checked_out, req.body.address_number, req.body.address_street ,req.body.address_city ,req.body.address_state, req.body.address_zipcode]
     ]
     con.query(query, [data], (err, result) => {
         if (err) throw err;

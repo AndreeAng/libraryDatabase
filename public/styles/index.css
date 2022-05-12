@@ -19,6 +19,10 @@ body {
     background: purple;
     padding: 2%;
 }
+.customer_list{
+    background: rgb(255, 253, 152);
+    padding: 2%;
+}
 
 h1 {
     color: navy;

@@ -87,3 +87,42 @@
       </ul>
    </div>
 </div>
+
+<div class="customer_list">
+   <h3>Add a Customer to the Library Database:</h3>
+   <form method="POST" action="/customer" >
+      <label for="library_card_number">Library Card No.:</label>
+      <input type="text" name="library_card_number" id="task" required>
+      <label for="username">Username:</label>
+      <input type="text" name="username" id="task" required>
+      <label for="password">Password:</label>
+      <input type="text" name="password" id="task" required>
+      <label for="first_name">First Name:</label>
+      <input type="text" name="first_name" id="task" required>
+      <label for="last_name">Last Name:</label>
+      <input type="text" name="last_name" id="task" required>
+      <label for="email">Email:</label>
+      <input type="text" name="email" id="task" required>
+      <label for="items_checked_out">Items Checked Out:</label>
+      <input type="text" name="items_checked_out" id="task" required>
+      <label for="address_number">Address Number:</label>
+      <input type="text" name="address_number" id="task" required>
+      <label for="address_street">Address Street:</label>
+      <input type="text" name="address_street" id="task" required>
+      <label for="address_city">Address City:</label>
+      <input type="text" name="address_city" id="task" required>
+      <label for="address_state">Address State:</label>
+      <input type="text" name="address_state" id="task" required>
+      <label for="address_zipcode">Address Zipcode:</label>
+      <input type="text" name="address_zipcode" id="task" required>
+      <button type="submit" id="submit">Add Customer</button>
+   </form>
+   <h3>Current Customers</h3>
+   <div id="tasks_container">
+      <ul>
+         {{#each customers}}
+         <li>Library Card No.: {{library_card_number}} | Username: {{username}} | Password: {{password}} | First Name: {{first_name}} | Last Name: {{last_name}} | Email: {{email}} | Items Checked Out: {{items_checked_out}} | Address: {{addres_number}} {{address_street}} {{address_city}}, {{address_state}} {{address_zipcode}}</li>
+         {{/each}}
+      </ul>
+   </div>
+</div>
