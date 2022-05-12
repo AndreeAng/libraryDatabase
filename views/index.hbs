@@ -34,12 +34,7 @@
 
 <div class="audio_view">
    <h3>Add an AudioBook to the Library:</h3>
-    {{!-- <form method="POST" action="/">
-    <ul>
-        {{#each items}}
-    </ul>
-    </form> --}}
-    <form method="POST" action="/" >
+    <form method="POST" action="/audiobook" >
       <label for="id">ID:</label>
       <input type="text" name="id" id="task" required>
       <label for="name">Title:</label>
@@ -68,9 +63,27 @@
 
 <div class="cd_view">
    <h3>Add a CD to the Library:</h3>
-    {{!-- <form method="POST" action="/">
-    <ul>
-        {{#each items}}
-    </ul>
-    </form> --}}
+   <form method="POST" action="/cd" >
+      <label for="id">ID:</label>
+      <input type="text" name="id" id="task" required>
+      <label for="name">Title:</label>
+      <input type="text" name="name" id="task" required>
+      <label for="status">Status:</label>
+      <input type="text" name="status" id="task" required>
+      <label for="artist_name">Artist Name:</label>
+      <input type="text" name="artist_name" id="task" required>
+      <label for="year">Year:</label>
+      <input type="text" name="year" id="task" required>
+      <label for="genre">Genre:</label>
+      <input type="text" name="genre" id="task" required>
+      <button type="submit" id="submit">Add CD</button>
+   </form>
+   <h3>CDs in the Library</h3>
+   <div id="tasks_container">
+      <ul>
+         {{#each cd_s}}
+         <li>ID: {{id}} | Title: {{name}} | Status: {{status}} | Artist Name: {{artist_name}} | Year: {{year}} | Genre: {{genre}} </li>
+         {{/each}}
+      </ul>
+   </div>
 </div>

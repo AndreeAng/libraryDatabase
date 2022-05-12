@@ -28,40 +28,26 @@ app.use(bodyParser.json())
 
 
 app.get('/index.hbs', (req, res) => {
-    let query = "SELECT * FROM library.book";
-    let query_audiobook = "SELECT * FROM library.audiobook";
+    var queries = "SELECT * FROM library.book;SELECT * FROM library.audiobook;SELECT * FROM library.cd";
     let items = []
     let auds = []
-    con.query(query, (err, result) => {
+    let cd_s = []
+    con.query(queries, [3,1], function(err, result, fields){
         if (err) throw err;
-        items = result
+        items = result[0]
+        auds = result[1]
+        cd_s = result[2]
         console.log(items)
+        console.log(auds)
+        console.log(cd_s)
         res.render('index', {
-            items: items
+            items: items,
+            auds:auds,
+            cd_s:cd_s
         })
     })
-    // con.query(query_audiobook, (err, result) => {
-    //     if (err) throw err;
-    //     auds = result
-    //     console.log(auds)
-    //     res.render('index', {
-    //         auds: auds
-    //     })
-    // })
 });
 
-// app.get('/index.hbs', (req, res) => {
-//     let query = "SELECT * FROM library.audiobook";
-//     let auds = []
-//     con.query(query, (err, result) => {
-//         if (err) throw err;
-//         auds = result
-//         console.log(auds)
-//         res.render('index', {
-//             auds: auds
-//         })
-//     })
-// });
 
 app.get('/', (req, res) => {
     res.render('index',{
@@ -75,18 +61,6 @@ app.get('/customer.hbs', (req,res) => {
     });
 });
 
-
-// app.get('/', (req, res) => {
-//     //serves the body of the page to the container
-//     let query = "SELECT * FROM library.book";
-//     let items = [];
-//     con.query(query, (err, result) => {
-//         if (err) throw err;
-//         items = result
-//         console.log(items)
-//         res.redirect('/customer')
-//     })
-// });
 
 app.post('/', (req, res) => {
     let query = "INSERT INTO library.book(ibsn, name, status, author, genre) VALUES ?;";
@@ -105,6 +79,18 @@ app.post('/audiobook', (req, res) => {
     let query = "INSERT INTO library.audiobook(id, name, status, length, author, narrator, genre) VALUES ?;";
     data = [
         [req.body.id, req.body.name, req.body.status, req.body.length, req.body.author, req.body.narrator, req.body.genre]
+    ]
+    con.query(query, [data], (err, result) => {
+        if (err) throw err;
+        console.log(result)
+        res.redirect('/')
+    })
+});
+
+app.post('/cd', (req, res) => {
+    let query = "INSERT INTO library.cd(id, name, status, artist_name, year, genre) VALUES ?;";
+    data = [
+        [req.body.id, req.body.name, req.body.status, req.body.artist_name, req.body.year, req.body.genre]
     ]
     con.query(query, [data], (err, result) => {
         if (err) throw err;

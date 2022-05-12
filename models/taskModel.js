@@ -5,8 +5,10 @@ var mysql = require('mysql');
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "PUT PASSWORD HERE"
-});
+    password: "PASSWORD GOES HERE",
+    multipleStatements:true
+}
+);
 
 con.connect(function (err) {
     if (err) throw err;
