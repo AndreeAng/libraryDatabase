@@ -1,23 +1,55 @@
 body {
     min-width: 60%;
-    width: 80%;
+    width: 100%;
     margin: auto;
 }
 .container {
-    background-color: lightblue;
+    background-color: rgb(148, 210, 230);
     padding: 2%
 }
-.items_view{
-    background: pink;
+.customer-container {
+    background-color: rgb(185, 45, 126);
+    padding: 2%
+}
+.book_view{
+    background: rgb(236, 236, 236);
     padding: 2%;
 }
+.audio_view{
+    background: rgb(202, 202, 202);
+    padding: 2%;
+}
+.cd_view{
+    background: rgb(133, 133, 133);
+    padding: 2%;
+}
+.customer_list{
+    background: rgb(255, 253, 152);
+    padding: 2%;
+}
+.checkout_view{
+    background: rgb(206, 227, 240);
 
+    right: 100px;
+    padding: 1%;
+}
+.available {
+    color: rgb(0, 0, 0);
+}
+.unavailable {
+    text-decoration: line-through;
+    color: rgb(219, 0, 0);
+}
 h1 {
     color: navy;
 }
-#task {
+/* #task {
     padding: 1% 2%;
+    width: 80px;
     border-color: navy;
+} */
+li:not(:last-child) {
+    margin-bottom: 10px;
 }
 #submit {
     padding: 1% 2%;

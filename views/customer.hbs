@@ -1,0 +1,79 @@
+<div class="customer-container">
+   <h1>Online Library</h1>
+   <h2>Customer Portal</h2>
+   <a href = "index.hbs">
+      <button type="button" id="submit">Switch to Librarian View</button>
+   </a>
+   <br>
+   <br>
+   <div class="checkout_view">
+      <h3>Checked Out Items</h3>
+      <div id="tasks_container">
+         <ul>
+            {{#each checkout_items}}
+            <li>Item_ID: {{id}} | Library Card Number: {{customer_id}} | Checkout Date: {{checkout_date}} | Item Type: {{item_type}}</li>
+            <a href="/checkin/{{id}}">
+               <button type="button" id="submit">Check In</button>
+            </a>
+            {{/each}}
+         </ul>
+      </div>
+   </div>
+   <br>
+   <br>
+   <br>
+   <br>
+   <div class="book_view">
+      <h3>Books</h3>
+         <div id="tasks_container">
+            <ul>
+               {{#each items}}
+               {{#if (isCompleted status)}}
+               <li class="available">IBSN: {{id}} | Title: {{name}} | Status: {{status}} | Author: {{author}} | Genre: {{genre}} | Item Type: {{item_type}}</li>
+               <a href="/checkout/{{id}}/{{item_type}}">
+                  <button type="button" id="submit">Check Out</button>
+               </a>
+               {{else}}
+               <li class="unavailable">IBSN: {{id}} | Title: {{name}} | Status: {{status}} | Author: {{author}} | Genre: {{genre}} | Item Type: {{item_type}}</li>
+               {{/if}}
+               {{/each}}
+            </ul>
+         </div>
+   </div>
+   <br>
+   <div class="audio_view">
+      <h3>Audiobooks</h3>
+         <div id="tasks_container">
+            <ul>
+               {{#each auds}}
+               {{#if (isCompleted status)}}
+               <li class="available">ID: {{id}} | Title: {{name}} | Status: {{status}} | Length: {{length}} | Author: {{author}} | Narrator: {{narrator}} | Genre: {{genre}} </li>
+               <a href="/checkout/{{id}}">
+                  <button type="button" id="submit">Check Out</button>
+               </a>
+               {{else}}
+               <li class="unavailable">ID: {{id}} | Title: {{name}} | Status: {{status}} | Length: {{length}} | Author: {{author}} | Narrator: {{narrator}} | Genre: {{genre}} </li>
+               {{/if}}
+               {{/each}}
+            </ul>
+         </div>
+   </div>
+   <br>
+   <div class="cd_view">
+      <h3>CDs</h3>
+      <div id="tasks_container">
+         <ul>
+            {{#each cd_s}}
+            {{#if (isCompleted status)}}
+               <li class="available">ID: {{id}} | Title: {{name}} | Status: {{status}} | Artist Name: {{artist_name}} | Year: {{year}} | Genre: {{genre}} </li>
+               <a href="/checkout/{{id}}">
+                  <button type="button" id="submit">Check Out</button>
+               </a>            
+            {{else}}
+               <li class="unavailable">ID: {{id}} | Title: {{name}} | Status: {{status}} | Artist Name: {{artist_name}} | Year: {{year}} | Genre: {{genre}} </li>
+            {{/if}}
+            {{/each}}
+         </ul>
+      </div>
+   </div>
+</div>
