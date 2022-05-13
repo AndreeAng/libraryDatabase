@@ -7,30 +7,37 @@
    </a>
    <br>
    <br>
-   <h3>Add a Book to the Library:</h3>
-   <form method="POST" action="/" >
-      <label for="ibsn">IBSN:</label>
-      <input type="text" name="ibsn" id="task" required>
-      <label for="title">Title:</label>
-      <input type="text" name="name" id="task" required>
-      <label for="status">Status:</label>
-      <input type="text" name="status" id="task" required>
-      <label for="author">Author:</label>
-      <input type="text" name="author" id="task" required>
-      <label for="genre">Genre:</label>
-      <input type="text" name="genre" id="task" required>
-      <button type="submit" id="submit">Add Book</button>
-   </form>
-   <br>
-   <h3>Books in the Library:</h3>
-   <div id="tasks_container">
-      <ul>
-         {{#each items}}
-         <li>IBSN: {{ibsn}} | Title: {{name}} | Status: {{status}} | Author: {{author}} | Genre: {{genre}} </li>
-         {{/each}}
-      </ul>
+   <div class="book_view">
+      <h3>Add a Book to the Library:</h3>
+      <form method="POST" action="/" >
+         <label for="id">IBSN:</label>
+         <input type="text" name="id" id="task" required>
+         <label for="title">Title:</label>
+         <input type="text" name="name" id="task" required>
+         <label for="status">Status:</label>
+         <input type="text" name="status" id="task" required>
+         <label for="author">Author:</label>
+         <input type="text" name="author" id="task" required>
+         <label for="genre">Genre:</label>
+         <input type="text" name="genre" id="task" required>
+         <button type="submit" id="submit">Add Book</button>
+      </form>
+      <br>
+      <h3>Books in the Library:</h3>
+      <div id="tasks_container">
+         <ul>
+            {{#each items}}
+            {{#if (isCompleted status)}}
+            <li class="available">IBSN: {{id}} | Title: {{name}} | Status: {{status}} | Author: {{author}} | Genre: {{genre}} </li>
+            <a href="/unavailable/{{id}}">Mark as Unavailable</a>
+            {{else}}
+            <li class="unavailable">IBSN: {{id}} | Title: {{name}} | Status: {{status}} | Author: {{author}} | Genre: {{genre}} </li>
+            <a href="/available/{{id}}">Mark as Available</a>
+            {{/if}}
+            {{/each}}
+         </ul>
+      </div>
    </div>
-</div>
 
 <div class="audio_view">
    <h3>Add an AudioBook to the Library:</h3>
@@ -55,7 +62,13 @@
    <div id="tasks_container">
       <ul>
          {{#each auds}}
-         <li>ID: {{id}} | Title: {{name}} | Status: {{status}} | Length: {{length}} | Author: {{author}} | Narrator: {{narrator}} | Genre: {{genre}} </li>
+         {{#if (isCompleted status)}}
+         <li class="available">ID: {{id}} | Title: {{name}} | Status: {{status}} | Length: {{length}} | Author: {{author}} | Narrator: {{narrator}} | Genre: {{genre}} </li>
+         {{!-- <a href="/unavailable/{{id}}">Mark as Unvailable</a> --}}
+         {{else}}
+         <li class="unavailable">ID: {{id}} | Title: {{name}} | Status: {{status}} | Length: {{length}} | Author: {{author}} | Narrator: {{narrator}} | Genre: {{genre}} </li>
+         {{!-- <a href="/available/{{id}}">Mark as Available</a> --}}
+         {{/if}}
          {{/each}}
       </ul>
    </div>
@@ -82,7 +95,11 @@
    <div id="tasks_container">
       <ul>
          {{#each cd_s}}
-         <li>ID: {{id}} | Title: {{name}} | Status: {{status}} | Artist Name: {{artist_name}} | Year: {{year}} | Genre: {{genre}} </li>
+         {{#if (isCompleted status)}}
+         <li class="available">ID: {{id}} | Title: {{name}} | Status: {{status}} | Artist Name: {{artist_name}} | Year: {{year}} | Genre: {{genre}} </li>
+         {{else}}
+         <li class="unavailable">ID: {{id}} | Title: {{name}} | Status: {{status}} | Artist Name: {{artist_name}} | Year: {{year}} | Genre: {{genre}} </li>
+         {{/if}}
          {{/each}}
       </ul>
    </div>
@@ -122,7 +139,9 @@
       <ul>
          {{#each customers}}
          <li>Library Card No.: {{library_card_number}} | Username: {{username}} | Password: {{password}} | First Name: {{first_name}} | Last Name: {{last_name}} | Email: {{email}} | Items Checked Out: {{items_checked_out}} | Address: {{addres_number}} {{address_street}} {{address_city}}, {{address_state}} {{address_zipcode}}</li>
+          <a href="/test/{{library_card_number}}"><i class="fa fa-trash"></i> Delete the Customer</a>
          {{/each}}
       </ul>
    </div>
+</div>
 </div>

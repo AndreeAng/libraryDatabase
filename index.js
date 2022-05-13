@@ -12,7 +12,15 @@ app.set('view engine', 'hbs');
 
 // //handlebars html templates stored in views/layouts folder
 app.engine('hbs', hbs.engine({
-    
+    helpers: {
+        isCompleted: function (status) {
+            if (status == "available") {
+                return true
+            } else {
+                return false
+            }
+        },
+    },
     layoutsDir: __dirname + '/views/layouts',
     defaultLayout: 'main',
     extname: '.hbs'
@@ -40,10 +48,10 @@ app.get('/index.hbs', (req, res) => {
         auds      = result[1]
         cd_s      = result[2]
         customers = result[3]
-        console.log(items)
-        console.log(auds)
-        console.log(cd_s)
-        console.log(customers)
+        // console.log(items)
+        // console.log(auds)
+        // console.log(cd_s)
+        // console.log(customers)
         res.render('index', {
             items: items,
             auds:auds,
@@ -53,54 +61,126 @@ app.get('/index.hbs', (req, res) => {
     })
 });
 
-
-app.get('/', (req, res) => {
-    res.render('index',{
-        items: []
+app.get('/customer.hbs', (req, res) => {
+    var queries = "SELECT * FROM library.book;SELECT * FROM library.audiobook;SELECT * FROM library.cd;SELECT * FROM library.items_checkout_history";
+    let items = []
+    let auds = []
+    let cd_s = []
+    let checkout_items = []
+    con.query(queries, [4,1], function(err, result, fields){
+        if (err) throw err;
+        items          = result[0]
+        auds           = result[1]
+        cd_s           = result[2]
+        checkout_items = result[3]
+        // console.log(items)
+        // console.log(auds)
+        // console.log(cd_s)
+        // console.log(customers)
+        res.render('customer', {
+            items:items,
+            auds:auds,
+            cd_s:cd_s,
+            checkout_items:checkout_items
+        })
     })
-})
-
-app.get('/customer.hbs', (req,res) => {
-    res.render('customer', {
-        items: []
-    });
 });
+
+//for books
+app.get('/:status/:id', (req, res) => {
+    let query = "UPDATE library.book SET status='" + req.params.status + "' WHERE id=" + req.params.id
+    con.query(query, (err, result) => {
+        if (err) throw err;
+        //console.log(result)
+        res.redirect('/index.hbs')
+    })
+});
+
+//code to checkout an item from clicking the Check Out buttons in the customer view
+app.get('/checkout/:id', (req, res) => {
+    console.log(req.params.id);
+    console.log("check outfunc running");
+    var custid = Date.prototype.getHours() * (Math.random() * 10);
+    let query = "INSERT INTO library.items_checkout_history VALUES ('" + req.params.id + "', " + custid + Date.now() + "'item;UPDATE library." + req.params.item_type + "' SET status=available WHERE id=" + req.params.id;
+    con.query(query,[2,1], function(err, result, fields){
+        if (err) throw err;
+        res.redirect('/customer.hbs')
+    })
+});
+
+app.get('/checkin/:id', (req, res) => {
+    console.log(req.params.id);
+    console.log("checkin func running");
+    var custid = Date.prototype.getHours() * (Math.random() * 10);
+    let query = "DELETE FROM library.items_checkout_history WHERE id=" + req.params.id;
+    con.query(query, (err, result) =>{
+        if (err) throw err;
+        res.redirect('/customer.hbs')
+    })
+});
+
+//for audiobooks
+// app.get('/:status/:id', (req, res) => {
+//     console.log(req.params)
+//     let query = "UPDATE library.audiobook SET status='" + req.params.status + "' WHERE id=" + req.params.id
+//     con.query(query, (err, result) => {
+//         if (err) throw err;
+//         console.log(result)
+//         console.log('here?')
+//         res.redirect('/index.hbs')
+//     })
+// });
+
+app.get('/test/:library_card_number', (req, res) => {
+    console.log(req.params)
+    let query = "DELETE FROM library.customer WHERE library_card_number=" + req.params.library_card_number;
+    con.query(query, (err, result) => {
+        if (err) throw err;
+        console.log(result)
+        res.redirect('/index.hbs')
+    })
+});
+
+//this is the default landing page -- idk how to change this to be index.hbs
+app.get('/', (req, res) => {
+    res.redirect('/index.hbs')
+})
 
 
 app.post('/', (req, res) => {
-    let query = "INSERT INTO library.book(ibsn, name, status, author, genre) VALUES ?;";
+    let query = "INSERT INTO library.book(id, name, status, author, genre, item_type) VALUES ?;";
     data = [
-        [req.body.ibsn, req.body.name, req.body.status, req.body.author, req.body.genre]
+        [req.body.id, req.body.name, req.body.status, req.body.author, req.body.genre, req.body.item_type]
     ]
     con.query(query, [data], (err, result) => {
         if (err) throw err;
         console.log(result)
-        res.redirect('/')
+        res.redirect('/index.hbs')
     })
 });
 
 
 app.post('/audiobook', (req, res) => {
-    let query = "INSERT INTO library.audiobook(id, name, status, length, author, narrator, genre) VALUES ?;";
+    let query = "INSERT INTO library.audiobook(id, name, status, length, author, narrator, genre, item_type) VALUES ?;";
     data = [
-        [req.body.id, req.body.name, req.body.status, req.body.length, req.body.author, req.body.narrator, req.body.genre]
+        [req.body.id, req.body.name, req.body.status, req.body.length, req.body.author, req.body.narrator, req.body.genre, req.body.item_type]
     ]
     con.query(query, [data], (err, result) => {
         if (err) throw err;
         console.log(result)
-        res.redirect('/')
+        res.redirect('/index.hbs')
     })
 });
 
 app.post('/cd', (req, res) => {
-    let query = "INSERT INTO library.cd(id, name, status, artist_name, year, genre) VALUES ?;";
+    let query = "INSERT INTO library.cd(id, name, status, artist_name, year, genre, item_type) VALUES ?;";
     data = [
-        [req.body.id, req.body.name, req.body.status, req.body.artist_name, req.body.year, req.body.genre]
+        [req.body.id, req.body.name, req.body.status, req.body.artist_name, req.body.year, req.body.genre, req.body.item_type]
     ]
     con.query(query, [data], (err, result) => {
         if (err) throw err;
         console.log(result)
-        res.redirect('/')
+        res.redirect('/index.hbs')
     })
 });
 
@@ -112,7 +192,7 @@ app.post('/customer', (req, res) => {
     con.query(query, [data], (err, result) => {
         if (err) throw err;
         console.log(result)
-        res.redirect('/')
+        res.redirect('/index.hbs')
     })
 });
 
