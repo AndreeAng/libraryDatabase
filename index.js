@@ -86,36 +86,43 @@ app.get('/customer.hbs', (req, res) => {
     })
 });
 
+
+
+//code to checkout an item from clicking the Check Out buttons in the customer view
+app.get('/checkout/:id/:item_type', (req, res) => {
+    console.log(req.params.id);
+    console.log("check outfunc running");
+    var custid = parseInt(Math.random() * 200);
+    let checkout_items = []
+    let query = "INSERT INTO library.items_checkout_history VALUES ('" + req.params.id + "', " + custid.toString() +", 05-13-2022 , '" + req.params.item_type + "');UPDATE library." + req.params.item_type + " SET status='unavailable' WHERE id=" + req.params.id + ";SELECT * FROM library.items_checkout_history";
+    con.query(query,[3,1], function(err, result, fields){
+        if (err) throw err;
+        res.redirect('/customer.hbs')
+        // res.render('customer', {
+        //     checkout_items:checkout_items,
+        // })
+    })
+});
+
+app.get('/checkin/:id/:item_type', (req, res) => {
+    console.log(req.params.id);
+    console.log("checkin func running");
+    //var custid = Date.prototype.getHours() * (Math.random() * 10);
+    let query = "DELETE FROM library.items_checkout_history WHERE id=" + req.params.id+";UPDATE library." + req.params.item_type + " SET status='available' WHERE id=" + req.params.id;
+    con.query(query, (err, result) =>{
+        if (err) throw err;
+        res.redirect('/customer.hbs')
+    })
+});
+
 //for books
 app.get('/:status/:id', (req, res) => {
+    console.log("is it in here?")
     let query = "UPDATE library.book SET status='" + req.params.status + "' WHERE id=" + req.params.id
     con.query(query, (err, result) => {
         if (err) throw err;
         //console.log(result)
         res.redirect('/index.hbs')
-    })
-});
-
-//code to checkout an item from clicking the Check Out buttons in the customer view
-app.get('/checkout/:id', (req, res) => {
-    console.log(req.params.id);
-    console.log("check outfunc running");
-    var custid = Date.prototype.getHours() * (Math.random() * 10);
-    let query = "INSERT INTO library.items_checkout_history VALUES ('" + req.params.id + "', " + custid + Date.now() + "'item;UPDATE library." + req.params.item_type + "' SET status=available WHERE id=" + req.params.id;
-    con.query(query,[2,1], function(err, result, fields){
-        if (err) throw err;
-        res.redirect('/customer.hbs')
-    })
-});
-
-app.get('/checkin/:id', (req, res) => {
-    console.log(req.params.id);
-    console.log("checkin func running");
-    var custid = Date.prototype.getHours() * (Math.random() * 10);
-    let query = "DELETE FROM library.items_checkout_history WHERE id=" + req.params.id;
-    con.query(query, (err, result) =>{
-        if (err) throw err;
-        res.redirect('/customer.hbs')
     })
 });
 

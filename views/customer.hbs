@@ -29,12 +29,12 @@
             <ul>
                {{#each items}}
                {{#if (isCompleted status)}}
-               <li class="available">IBSN: {{id}} | Title: {{name}} | Status: {{status}} | Author: {{author}} | Genre: {{genre}} </li>
-               <a href="/checkout/{{id}}">
+               <li class="available">IBSN: {{id}} | Title: {{name}} | Status: {{status}} | Author: {{author}} | Genre: {{genre}} | Item Type: {{item_type}}</li>
+               <a href="/checkout/{{id}}/{{item_type}}">
                   <button type="button" id="submit">Check Out</button>
                </a>
                {{else}}
-               <li class="unavailable">IBSN: {{id}} | Title: {{name}} | Status: {{status}} | Author: {{author}} | Genre: {{genre}} </li>
+               <li class="unavailable">IBSN: {{id}} | Title: {{name}} | Status: {{status}} | Author: {{author}} | Genre: {{genre}} | Item Type: {{item_type}}</li>
                {{/if}}
                {{/each}}
             </ul>
