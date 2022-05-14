@@ -94,7 +94,7 @@ app.get('/checkout/:id/:item_type', (req, res) => {
     console.log("check outfunc running");
     var custid = parseInt(Math.random() * 200);
     let checkout_items = []
-    let query = "INSERT INTO library.items_checkout_history VALUES ('" + req.params.id + "', " + custid.toString() +", 05-13-2022 , '" + req.params.item_type + "');UPDATE library." + req.params.item_type + " SET status='unavailable' WHERE id=" + req.params.id + ";SELECT * FROM library.items_checkout_history";
+    let query = "INSERT INTO library.items_checkout_history VALUES ('" + req.params.id + "', " + custid.toString() +", 'May 13th 2022' , '" + req.params.item_type + "');UPDATE library." + req.params.item_type + " SET status='unavailable' WHERE id=" + req.params.id + ";SELECT * FROM library.items_checkout_history";
     con.query(query,[3,1], function(err, result, fields){
         if (err) throw err;
         res.redirect('/customer.hbs')
@@ -117,7 +117,6 @@ app.get('/checkin/:id/:item_type', (req, res) => {
 
 //for books
 app.get('/:status/:id', (req, res) => {
-    console.log("is it in here?")
     let query = "UPDATE library.book SET status='" + req.params.status + "' WHERE id=" + req.params.id
     con.query(query, (err, result) => {
         if (err) throw err;
@@ -157,7 +156,7 @@ app.get('/', (req, res) => {
 app.post('/', (req, res) => {
     let query = "INSERT INTO library.book(id, name, status, author, genre, item_type) VALUES ?;";
     data = [
-        [req.body.id, req.body.name, req.body.status, req.body.author, req.body.genre, req.body.item_type]
+        [req.body.id, req.body.name, req.body.status, req.body.author, req.body.genre, "book"]
     ]
     con.query(query, [data], (err, result) => {
         if (err) throw err;
@@ -170,7 +169,7 @@ app.post('/', (req, res) => {
 app.post('/audiobook', (req, res) => {
     let query = "INSERT INTO library.audiobook(id, name, status, length, author, narrator, genre, item_type) VALUES ?;";
     data = [
-        [req.body.id, req.body.name, req.body.status, req.body.length, req.body.author, req.body.narrator, req.body.genre, req.body.item_type]
+        [req.body.id, req.body.name, req.body.status, req.body.length, req.body.author, req.body.narrator, req.body.genre, "audiobook"]
     ]
     con.query(query, [data], (err, result) => {
         if (err) throw err;
@@ -182,7 +181,7 @@ app.post('/audiobook', (req, res) => {
 app.post('/cd', (req, res) => {
     let query = "INSERT INTO library.cd(id, name, status, artist_name, year, genre, item_type) VALUES ?;";
     data = [
-        [req.body.id, req.body.name, req.body.status, req.body.artist_name, req.body.year, req.body.genre, req.body.item_type]
+        [req.body.id, req.body.name, req.body.status, req.body.artist_name, req.body.year, req.body.genre, "cd"]
     ]
     con.query(query, [data], (err, result) => {
         if (err) throw err;

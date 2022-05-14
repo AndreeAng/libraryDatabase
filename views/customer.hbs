@@ -12,7 +12,7 @@
          <ul>
             {{#each checkout_items}}
             <li>Item_ID: {{id}} | Library Card Number: {{customer_id}} | Checkout Date: {{checkout_date}} | Item Type: {{item_type}}</li>
-            <a href="/checkin/{{id}}">
+            <a href="/checkin/{{id}}/{{item_type}}">
                <button type="button" id="submit">Check In</button>
             </a>
             {{/each}}
@@ -48,7 +48,7 @@
                {{#each auds}}
                {{#if (isCompleted status)}}
                <li class="available">ID: {{id}} | Title: {{name}} | Status: {{status}} | Length: {{length}} | Author: {{author}} | Narrator: {{narrator}} | Genre: {{genre}} </li>
-               <a href="/checkout/{{id}}">
+               <a href="/checkout/{{id}}/{{item_type}}">
                   <button type="button" id="submit">Check Out</button>
                </a>
                {{else}}
@@ -66,7 +66,7 @@
             {{#each cd_s}}
             {{#if (isCompleted status)}}
                <li class="available">ID: {{id}} | Title: {{name}} | Status: {{status}} | Artist Name: {{artist_name}} | Year: {{year}} | Genre: {{genre}} </li>
-               <a href="/checkout/{{id}}">
+               <a href="/checkout/{{id}}/{{item_type}}">
                   <button type="button" id="submit">Check Out</button>
                </a>            
             {{else}}
